@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.routes';
+import suggestionRoutes from './routes/suggestion.routes';
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/suggestions', suggestionRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
