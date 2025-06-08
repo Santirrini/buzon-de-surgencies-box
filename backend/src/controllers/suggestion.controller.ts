@@ -6,7 +6,7 @@ const suggestionSchema = z.object({
   text: z.string().min(1, { message: "Suggestion text cannot be empty" }),
 });
 
-export async function getAllApprovedSuggestions(req: Request, res: Response) {
+export async function getAllApprovedSuggestions(req: Request, res: Response): Promise<void> {
   try {
     const suggestions = await getApprovedSuggestions();
     res.status(200).json(suggestions);
@@ -16,12 +16,13 @@ export async function getAllApprovedSuggestions(req: Request, res: Response) {
   }
 }
 
-export async function postSuggestion(req: Request, res: Response) {
+export async function postSuggestion(req: Request, res: Response): Promise<void> {
   try {
     const validationResult = suggestionSchema.safeParse(req.body);
 
     if (!validationResult.success) {
-      return res.status(400).json({ errors: validationResult.error.flatten().fieldErrors });
+      res.status(400).json({ errors: validationResult.error.flatten().fieldErrors });
+      return;
     }
 
     const { text } = validationResult.data;

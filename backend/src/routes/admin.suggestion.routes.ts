@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, RequestHandler } from 'express';
 import { fetchAllSuggestions, approveExistingSuggestion, removeSuggestion } from '../controllers/admin.suggestion.controller';
 import { authenticateToken } from '../middlewares/auth.middleware';
 
@@ -6,8 +6,12 @@ const router = Router();
 
 router.use(authenticateToken);
 
-router.get('/', fetchAllSuggestions);
-router.put('/:id/approve', approveExistingSuggestion);
-router.delete('/:id', removeSuggestion);
+const typedFetchAllSuggestionsHandler: RequestHandler = fetchAllSuggestions;
+const typedApproveExistingSuggestionHandler: RequestHandler = approveExistingSuggestion;
+const typedRemoveSuggestionHandler: RequestHandler = removeSuggestion;
+
+router.get('/', typedFetchAllSuggestionsHandler);
+router.put('/:id/approve', typedApproveExistingSuggestionHandler);
+router.delete('/:id', typedRemoveSuggestionHandler);
 
 export default router;
