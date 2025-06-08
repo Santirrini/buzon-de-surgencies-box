@@ -1,0 +1,5 @@
+{
+  "name": "Public Suggestion Box",
+  "description": "A public suggestion box where visitors can submit suggestions and administrators can log in to approve or delete them. Approved suggestions are visible to everyone.",
+  "requestFramePermissions": []
+}
