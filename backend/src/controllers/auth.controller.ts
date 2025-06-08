@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { loginUser } from '../services/auth.service';
 
-export async function login(req: Request, res: Response) {
+export async function login(req: Request, res: Response): Promise<void> {
   const { username, password } = req.body;
 
   if (!username || !password) {
