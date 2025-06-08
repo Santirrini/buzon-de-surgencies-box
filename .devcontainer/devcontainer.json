@@ -1,0 +1,19 @@
+{
+  "name": "Node.js & TypeScript",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": [
+        "Prisma.prisma",
+        "dbaeumer.vscode-eslint",
+        "rangav.vscode-thunder-client"
+      ]
+    }
+  },
+
+  "forwardPorts": [3000, 3001, 5173],
+
+  "postCreateCommand": "npm install -g pnpm && pnpm install"
+}
