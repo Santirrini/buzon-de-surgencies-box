@@ -17,3 +17,33 @@ export async function createSuggestion(text: string): Promise<Suggestion> {
     await prisma.$disconnect();
   }
 }
+
+export async function getAllSuggestions(): Promise<Suggestion[]> {
+  const prisma = new PrismaClient();
+  try {
+    return await prisma.suggestion.findMany();
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+export async function approveSuggestionById(id: number): Promise<Suggestion> {
+  const prisma = new PrismaClient();
+  try {
+    return await prisma.suggestion.update({
+      where: { id },
+      data: { status: Status.APPROVED },
+    });
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+export async function deleteSuggestionById(id: number): Promise<Suggestion> {
+  const prisma = new PrismaClient();
+  try {
+    return await prisma.suggestion.delete({ where: { id } });
+  } finally {
+    await prisma.$disconnect();
+  }
+}
