@@ -6,11 +6,12 @@ interface UserPayload extends JwtPayload {
   username: string;
 }
 
-export function authenticateToken(req: Request, res: Response, next: NextFunction) {
+export function authenticateToken(req: Request, res: Response, next: NextFunction): void {
   const authHeader = req.headers['authorization'];
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: 'Access token is required and must be a Bearer token' });
+    res.status(401).json({ message: 'Access token is required and must be a Bearer token' });
+    return;
   }
 
   const token = authHeader.split(' ')[1];
@@ -18,12 +19,14 @@ export function authenticateToken(req: Request, res: Response, next: NextFunctio
 
   if (!jwtSecret) {
     console.error('JWT_SECRET is not defined in environment variables.');
-    return res.status(500).json({ message: 'JWT secret not configured on server' });
+    res.status(500).json({ message: 'JWT secret not configured on server' });
+    return;
   }
 
   verify(token, jwtSecret, (err, decoded) => {
     if (err) {
-      return res.status(401).json({ message: 'Invalid or expired token' });
+      res.status(401).json({ message: 'Invalid or expired token' });
+      return;
     }
 
     req.user = decoded as UserPayload;
