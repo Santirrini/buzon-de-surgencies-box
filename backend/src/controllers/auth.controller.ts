@@ -15,6 +15,7 @@ export async function login(req: Request, res: Response) {
     if (error.message === 'Invalid credentials' || error.message === 'JWT_SECRET is not defined in environment variables.') {
       return res.status(401).json({ message: error.message });
     }
+    console.error(error);
     res.status(500).json({ message: 'Internal server error' });
   }
 }

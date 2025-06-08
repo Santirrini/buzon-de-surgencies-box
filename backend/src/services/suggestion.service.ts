@@ -3,7 +3,15 @@ import { PrismaClient, Suggestion, Status } from '@prisma/client';
 export async function getApprovedSuggestions(): Promise<Suggestion[]> {
   const prisma = new PrismaClient();
   try {
-    return await prisma.suggestion.findMany({ where: { status: Status.APPROVED } });
+    return await prisma.suggestion.findMany({
+      where: { status: Status.APPROVED },
+      select: {
+        id: true,
+        text: true,
+        status: true,
+        submittedAt: true,
+      },
+    });
   } finally {
     await prisma.$disconnect();
   }
